@@ -1,0 +1,172 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+% ---------- Custom Answer Environment ----------
+\newenvironment{answer}
+  {\par\bigskip\noindent\textbf{Answer:}\par\medskip}
+  {\par\bigskip}
+
+\begin{document}
+
+% ================== COVER PAGE ==================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Large Bo\u{g}azi\c{c}i University\\[0.3cm]
+    Department of Industrial Engineering\par}
+
+    \vspace{2cm}
+
+    {\Huge \textbf{IE 310 - Operations Research}\\[0.3cm]
+    \Large Fall 2025\par}
+
+    \vfill
+
+    {\LARGE \textbf{Course Project Report}\par}
+
+    \vspace{2cm}
+
+    \begin{large}
+    \begin{tabular}{rl}
+        Student ID: & 2021400231 \\
+        Student Name: & Mustafa Batuhan Büber \\
+    \end{tabular}
+    \end{large}
+
+    \vfill
+
+    \vspace{1.5cm}
+    {\large Date: December 11, 2025\par}
+
+    \vspace*{1cm}
+\end{titlepage}
+
+\tableofcontents
+\thispagestyle{empty}
+\clearpage
+\setcounter{page}{1}
+
+% ================== QUESTION 1 ==================
+\section*{Question 1: Modeling}
+\addcontentsline{toc}{section}{Question 1: Modeling}
+
+\subsection*{1. Sets and Indices}
+\begin{itemize}
+    \item $S$: Set of Supply nodes (Layer 1), indexed by $i$.
+    \item $T^1$: Set of First Transshipment nodes (Layer 2), indexed by $j$.
+    \item $T^2$: Set of Second Transshipment nodes (Layer 3), indexed by $k$.
+    \item $D$: Set of Demand nodes (Layer 4), indexed by $l$.
+\end{itemize}
+
+\subsection*{2. Parameters}
+\begin{itemize}
+    \item $S_i$: Supply capacity available at node $i \in S$.
+    \item $D_l$: Demand quantity required at node $l \in D$.
+    \item $c_{ij}$: Unit shipping cost from node $i \in S$ to node $j \in T^1$.
+    \item $c_{jk}$: Unit shipping cost from node $j \in T^1$ to node $k \in T^2$.
+    \item $c_{kl}$: Unit shipping cost from node $k \in T^2$ to node $l \in D$.
+\end{itemize}
+
+\subsection*{3. Decision Variables}
+Let the continuous decision variables representing the flow quantities be:
+\begin{itemize}
+    \item $x_{ij} \ge 0$: Amount shipped from $i \in S$ to $j \in T^1$.
+    \item $y_{jk} \ge 0$: Amount shipped from $j \in T^1$ to $k \in T^2$.
+    \item $z_{kl} \ge 0$: Amount shipped from $k \in T^2$ to $l \in D$.
+\end{itemize}
+
+\subsection*{4. Objective Function}
+Minimize the total transportation cost across all layers:
+\begin{equation*}
+    \text{Minimize } Z = \sum_{i \in S}\sum_{j \in T^1} c_{ij}x_{ij} + \sum_{j \in T^1}\sum_{k \in T^2} c_{jk}y_{jk} + \sum_{k \in T^2}\sum_{l \in D} c_{kl}z_{kl}
+\end{equation*}
+
+\subsection*{5. Constraints}
+\begin{align}
+    \text{Supply Capacity:} \quad & \sum_{j \in T^1} x_{ij} \le S_i & \forall i \in S \\
+    \text{Flow Conservation (Layer 2):} \quad & \sum_{i \in S} x_{ij} = \sum_{k \in T^2} y_{jk} & \forall j \in T^1 \\
+    \text{Flow Conservation (Layer 3):} \quad & \sum_{j \in T^1} y_{jk} = \sum_{l \in D} z_{kl} & \forall k \in T^2 \\
+    \text{Demand Satisfaction:} \quad & \sum_{k \in T^2} z_{kl} \ge D_l & \forall l \in D \\
+    \text{Non-Negativity:} \quad & x_{ij}, y_{jk}, z_{kl} \ge 0 & \forall i,j,k,l
+\end{align}
+
+\clearpage
+
+
+% ================== QUESTION 2 ==================
+\section*{Question 2: Implementation}
+\addcontentsline{toc}{section}{Question 2: Implementation}
+
+% Answer for Question 2.
+
+\clearpage
+
+
+% ================== QUESTION 3 ==================
+\section*{Question 3: Economic Interpretation and Sensitivity Analysis}
+\addcontentsline{toc}{section}{Question 3: Economic Interpretation and Sensitivity Analysis}
+
+
+\subsection*{3(a)}
+The capacity of supply node 3 increases by one unit.  
+What is the expected change in the total cost?
+
+% Answer for Question 3(a).
+
+\subsection*{3(b)}
+The capacity of supply node 0 increases by one unit.  
+What is the expected change in the total cost?
+
+% Answer for Question 3(b).
+
+\subsection*{3(c)}
+The demand quantity of demand node 0 increases by one unit.  
+What is the expected change in the total cost?
+
+% Answer for Question 3(c).
+
+\subsection*{3(d)}
+The unit cost of shipping from supply node 0 to first-layer transshipment node 2 decreases by one.  
+Do you expect a change in the basis? What is the expected change in the total cost?
+
+% Answer for Question 3(d).
+
+\subsection*{3(e)}
+The unit cost of shipping from supply node 0 to first-layer transshipment node 0 decreases by one.  
+Do you expect a change in the basis? What is the expected change in the total cost?
+
+% Answer for Question 3(e).
+
+\subsection*{3(f)}
+Suppose instead that the cost decrease in part 3(e) is 27.  
+Do you expect a change in the basis now? What is the resulting change in the total cost?
+
+% Answer for Question 3(f).
+
+\subsection*{3(g)}
+Assume that supply node 0 is no longer allowed to ship to first-layer transshipment node 2.  
+Do you expect the total cost to increase or decrease? Explain.
+
+% Answer for Question 3(g).
+
+\subsection*{3(h)}
+Assume that the demand quantity of demand node 1 increases.  
+What is the maximum amount by which this demand can increase while the system can still satisfy all demands?
+
+% Answer for Question 3(h).
+
+\clearpage
+
+
+% ================== QUESTION 4 ==================
+\section*{Question 4: Integrality}
+\addcontentsline{toc}{section}{Question 4: Integrality}
+
+% Answer for Question 4.
+
+\end{document}
