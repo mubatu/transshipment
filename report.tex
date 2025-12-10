@@ -118,18 +118,107 @@ The optimization model formulated in the modeling part was implemented using the
 \section*{Economic Interpretation and Sensitivity Analysis}
 \addcontentsline{toc}{section}{Economic Interpretation and Sensitivity Analysis}
 
+\subsection*{a) What if we increase the capacity of $S_3$ increases by one unit?}
+In the solution obtained in the implementation part, the flows from the supply
+nodes are:
+\[
+\sum_{j \in T^1} x_{0j} = 191,\quad
+\sum_{j \in T^1} x_{1j} = 233,\quad
+\sum_{j \in T^1} x_{2j} = 276,\quad
+\sum_{j \in T^1} x_{3j} = 380.
+\]
+The corresponding supply capacities are:
+\[
+S_0 = 191,\quad S_1 = 233,\quad S_2 = 276,\quad S_3 = 385.
+\]
+So, capacity constraints of $S_0$, $S_1$ and $S_2$ are tight,
+while $S_3$ has $5$ units of unused capacity:
+\[
+\sum_{j \in T^1} x_{3j} = 380 < S_3 = 385.
+\]
 
-\subsection*{3(a)}
-The capacity of supply node 3 increases by one unit.  
-What is the expected change in the total cost?
+Since the actual flow is strictly less than the available capacity ($380 < 385$), the supply constraint for Node 3 is \textbf{non-binding} (it has a slack of 5 units). In linear programming, the shadow price (dual value) of a non-binding constraint is zero. Therefore, increasing the capacity of Supply Node 3 by one unit provides additional surplus to a resource that is already in excess. It will not change the optimal routing or the objective function value.
 
-% Answer for Question 3(a).
+\textbf{Expected Change:}
+\[
+\Delta Z = 0.
+\]
 
-\subsection*{3(b)}
-The capacity of supply node 0 increases by one unit.  
-What is the expected change in the total cost?
+\subsection*{b) What if we increase the capacity of $S_0$ by one unit?}
 
-% Answer for Question 3(b).
+The supply constraint for $S_0$ is \textbf{binding} (Flow $x_{0,2} = 191$ equals Capacity $S_0 = 191$):
+\[
+\sum_{j \in T^1} x_{0j} = 191 = S_0 = 191.
+\]
+
+This suggests that increasing its capacity could reduce the total cost. To estimate the change, the cost of the path used by $S_0$ against the cost of the current marginal source can be compared.
+
+In part (a) it is observed that $S_3$ has unused capacity (slack). Therefore, allowing one additional unit of flow from $S_0$ leads to reducing the flow from $S_3$ by one unit to maintain the balance of demand.
+
+\textbf{Path Analysis:}
+\begin{itemize}
+    \item \textbf{Path from $S_3$ (Current Marginal Source):}
+    The active path is $S_3 \to T^1_1 \to T^2_3$. The cost is $c_{3,1} + c_{1,3} = 17 + 33 = 50$.
+    \item \textbf{Path from $S_0$ (Proposed Source):}
+    The active path is $S_0 \to T^1_2 \to T^2_3$. The cost is $c_{0,2} + c_{2,3} = 11 + 30 = 41$.
+\end{itemize}
+
+\textbf{Expected Change:}
+By shifting 1 unit of flow from the expensive path ($S_3$) to the cheaper path ($S_0$), the total cost is expected to change by:
+\[
+\Delta Z = \text{Cost}_{S0} - \text{Cost}_{S3} = 41 - 50 = -9.
+\]
+The total cost is expected to decrease by \textbf{9} units.
+
+
+\subsection*{c) What if the demand quantity of $D_0$ increases by one unit?}
+
+In the optimal solution, all demand is satisfied exactly by the flow from node $T^2_3$:
+\[
+z_{3,0} = 102,\quad
+z_{3,1} = 289,\quad
+z_{3,2} = 127,\quad
+z_{3,3} = 210,\quad
+z_{3,4} = 352.
+\]
+The demand quantities are:
+\[
+D_0 = 102,\; D_1 = 289,\; D_2 = 127,\; D_3 = 210,\; D_4 = 352.
+\]
+Thus, each demand constraint is \textbf{binding}, in particular for $D_0$:
+\[
+\sum_{k \in T^2} z_{k0} = z_{3,0} = 102 = D_0.
+\]
+
+If we increase the demand of node $D_0$ by one unit (from $102$ to $103$), the model must supply one additional unit of flow to $D_0$. Since there is unused capacity at supply node $S_3$, it is natural to use this slack to satisfy the extra demand.
+
+We trace the path from the marginal source ($S_3$) to the specific destination ($D_0$) through the active network path established in the optimal solution.
+
+\textbf{Path Analysis:}
+The path is $S_3 \to T^1_1 \to T^2_3 \to D_0$. The total marginal cost is the sum of the unit costs along this path:
+\begin{itemize}
+    \item $S_3 \to T^1_1$: $c_{3,1} = 17$
+    \item $T^1_1 \to T^2_3$: $c_{1,3} = 33$
+    \item $T^2_3 \to D_0$: $c_{3,0} = 11$
+\end{itemize}
+
+The per-unit cost of this path is
+\[
+c_{3,1} + c_{1,3} + c_{3,0}
+= 17 + 33 + 11
+= 61.
+\]
+
+Because no other constraints can be relaxed without incurring extra cost, the cheapest way to provide one more unit to $D_0$ is precisely to send one extra unit along this path from $S_3$. Therefore, the marginal (shadow) cost of increasing $D_0$ by one unit equals this per-unit cost.
+
+\textbf{Expected Change:}
+\[
+\Delta Z = +61.
+\]
+
+The total cost is expected to increase by \textbf{61} units. Consequently, the shadow price for the demand constraint of $D_0$ is expected to be 61.
+
+
 
 \subsection*{3(c)}
 The demand quantity of demand node 0 increases by one unit.  
