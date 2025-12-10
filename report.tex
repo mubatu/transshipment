@@ -118,7 +118,7 @@ The optimization model formulated in the modeling part was implemented using the
 \section*{Economic Interpretation and Sensitivity Analysis}
 \addcontentsline{toc}{section}{Economic Interpretation and Sensitivity Analysis}
 
-\subsection*{a) What if we increase the capacity of $S_3$ increases by one unit?}
+\subsection*{a) What if the capacity of $S_3$ increases by one unit?}
 In the solution obtained in the implementation part, the flows from the supply
 nodes are:
 \[
@@ -144,7 +144,7 @@ Since the actual flow is strictly less than the available capacity ($380 < 385$)
 \Delta Z = 0.
 \]
 
-\subsection*{b) What if we increase the capacity of $S_0$ by one unit?}
+\subsection*{b) What if the capacity of $S_0$ increases by one unit?}
 
 The supply constraint for $S_0$ is \textbf{binding} (Flow $x_{0,2} = 191$ equals Capacity $S_0 = 191$):
 \[
@@ -190,9 +190,7 @@ Thus, each demand constraint is \textbf{binding}, in particular for $D_0$:
 \sum_{k \in T^2} z_{k0} = z_{3,0} = 102 = D_0.
 \]
 
-If we increase the demand of node $D_0$ by one unit (from $102$ to $103$), the model must supply one additional unit of flow to $D_0$. Since there is unused capacity at supply node $S_3$, it is natural to use this slack to satisfy the extra demand.
-
-We trace the path from the marginal source ($S_3$) to the specific destination ($D_0$) through the active network path established in the optimal solution.
+If we increase the demand of node $D_0$ by one unit (from $102$ to $103$), the model must supply one additional unit of flow to $D_0$. Since there is unused capacity at $S_3$, it is natural to use this slack to satisfy the extra demand.
 
 \textbf{Path Analysis:}
 The path is $S_3 \to T^1_1 \to T^2_3 \to D_0$. The total marginal cost is the sum of the unit costs along this path:
@@ -220,41 +218,139 @@ The total cost is expected to increase by \textbf{61} units. Consequently, the s
 
 
 
-\subsection*{3(c)}
-The demand quantity of demand node 0 increases by one unit.  
-What is the expected change in the total cost?
+\subsection*{d) What if the cost of shipping from $S_0$ to $T^1_2$ decreases by one unit?}
 
-% Answer for Question 3(c).
+In the optimal solution from the implementation part, the flow from $S_0$ to $T^1_2$ is corresponding to the variable $x_{0,2}$. It is \textbf{basic} and strictly positive:
+\[
+x_{0,2} = 191.
+\]
+Its unit cost in the original model is:
+\[
+c_{0,2} = 11.
+\]
 
-\subsection*{3(d)}
-The unit cost of shipping from supply node 0 to first-layer transshipment node 2 decreases by one.  
-Do you expect a change in the basis? What is the expected change in the total cost?
+Decreasing the cost of a basic variable makes the current active path strictly more favorable than it was before. Since the supply constraint at $S_0$ is already binding (all supply is shipped  through this link), the flow cannot increased further. Since the link was already optimal at a higher price, it remains optimal at a lower price. Therefore, \textbf{no change expected in the basis}.
 
-% Answer for Question 3(d).
+\textbf{Expected Change:}
+The total cost will decrease by the reduction amount multiplied by the volume of flow on that link:
+\[
+\Delta Z = (\text{New Cost} - \text{Old Cost}) \times x_{0,2} = (-1) \times 191 = -191.
+\]
+The total cost is expected to decrease by \textbf{191} units.
 
-\subsection*{3(e)}
-The unit cost of shipping from supply node 0 to first-layer transshipment node 0 decreases by one.  
-Do you expect a change in the basis? What is the expected change in the total cost?
 
-% Answer for Question 3(e).
+\subsection*{e) What if the cost of shipping from $S_0$ to $T^1_0$ decreases by one unit?}
 
-\subsection*{3(f)}
-Suppose instead that the cost decrease in part 3(e) is 27.  
-Do you expect a change in the basis now? What is the resulting change in the total cost?
+In the optimal solution from the implementation part, the flow from $S_0$ to $T^1_0$ is corresponding to the variable ($x_{0,0}$). It is \textbf{non-basic}:
+\[
+x_{0,0} = 0.
+\]
 
-% Answer for Question 3(f).
+To determine if this variable will enter the basis, its \textbf{reduced cost} should be checked. The reduced cost represents the amount by which the unit cost $c_{0,0}$ must decrease to make this path competitive with the current optimal path.
 
-\subsection*{3(g)}
-Assume that supply node 0 is no longer allowed to ship to first-layer transshipment node 2.  
-Do you expect the total cost to increase or decrease? Explain.
+\textbf{Cost Comparison:}
+\begin{itemize}
+    \item Current active link ($S_0 \to T^1_2$): Unit cost = 11.
+    \item Proposed link ($S_0 \to T^1_0$): Unit cost = 28.
+\end{itemize}
 
-% Answer for Question 3(g).
+The cost difference in the first layer alone is substantial ($28 - 11 = 17$). A decrease of just 1 unit (reducing $c_{0,0}$ to 27) is insufficient to bridge this gap. The reduced cost of $x_{0,0}$ is undoubtedly greater than 1.
 
-\subsection*{3(h)}
-Assume that the demand quantity of demand node 1 increases.  
-What is the maximum amount by which this demand can increase while the system can still satisfy all demands?
+\textbf{Expected Change:}
+Since the cost reduction is not large enough to make the variable enter the basis, the optimal solution ($x^*$) remains exactly the same. The variable $x_{0,0}$ continues to have 0 flow.
+\[
+\Delta Z = (\text{New Cost} - \text{Old Cost}) \times x_{0,0} = (-1) \times 0 = 0.
+\]
+There is \textbf{no expected change} in the basis or the total cost.
 
-% Answer for Question 3(h).
+
+
+\subsection*{f) What if the same cost of shipping from $S_0$ to $T^1_0$ decreases by 27 units instead of one?}
+
+In the previous part, the cost difference between the active path and the unused path was approximately 17 units. A decrease of 1 unit was insufficient to make the new path attractive. However, a decrease of \textbf{27} units brings the cost of $c_{0,0}$ down from 28 to \textbf{1}.
+
+\textbf{Cost Comparison:}
+\begin{itemize}
+    \item Current active link ($S_0 \to T^1_2$): Unit cost = 11.
+    \item Proposed link ($S_0 \to T^1_0$): Unit cost = 28 - 27 = 1.
+\end{itemize}
+
+This decrease is significantly larger than the reduced cost barrier observed previously. It makes the path via $T^1_0$ far cheaper than the current optimal path via $T^1_2$.
+
+\textbf{Expected Change:}
+Because the cost reduction exceeds the reduced cost of the variable, the new reduced cost of $x_{0,0}$ becomes negative. This signals that the solution can be improved by using this link.
+Therefore, \textbf{a change in the basis is expected}. Variable $x_{0,0}$ will enter the basis (become positive), and likely replace $x_{0,2}$ as the primary route for $S_0$. The total cost will also decrease significantly.
+
+
+\subsection*{g) What if $S_0$ is no longer allowed to ship to $T^1_2$?}
+
+In the optimal solution, the only active outgoing arc from $S_0$ is:
+\[
+x_{0,2} = 191.
+\]
+All supply at $S_0$ is shipped through
+$S_0 \to T^1_2$. The supply constraint for $S_0$ is binding:
+\[
+\sum_{j \in T^1} x_{0j} = x_{0,2} = 191 = S_0.
+\]
+Forbidding this shipment effectively imposes a new constraint:
+\[
+x_{0,2} = 0.
+\]
+
+This removes the currently optimal option from the feasible set. When the optimal choice is removed, the system must resort to a second-best alternative to route the 191 units of supply. By definition, the second-best alternative cannot be cheaper than the optimal one.
+
+\textbf{Expected Change:}
+It is expected that the total cost \textbf{increases}. The model will be forced to use more expensive links (likely diverting flow through $T^1_0$ or $T^1_1$ or shifting supply responsibilities to other nodes) to satisfy the demand.
+
+
+\subsection*{h) What is the maximum amount by which the demand at $D_1$ can increase?}
+
+To determine the maximum possible increase in demand, the total available supply in the system should be compared against the total required demand:
+
+\begin{itemize}
+    \item \textbf{Total Supply Capacity:}
+    \[ \sum S_i = 191 + 233 + 276 + 385 = 1085. \]
+    \item \textbf{Total Current Demand:}
+    \[ \sum D_l = 102 + 289 + 127 + 210 + 352 = 1080. \]
+\end{itemize}
+
+The system currently has a \textbf{surplus capacity} (slack) of:
+\[
+\text{Slack} = \text{Total Supply} - \text{Total Demand} = 1085 - 1080 = 5 \text{ units}.
+\]
+
+From the optimal solution, it is known that this
+slack is entirely located at $S_3$:
+\[
+\sum_{j \in T^1} x_{3j} = 380 < S_3 = 385.
+\]
+
+If the demand at node $D_1$ increases by some amount $\Delta$, the total
+demand becomes:
+\[
+\sum_{l \in D} D_l^{\text{new}}
+= 1080 + \Delta.
+\]
+
+For the system to still be able to satisfy \emph{all} demands, this must hold:
+\[
+1080 + \Delta \le 1085
+\quad \Longrightarrow \quad
+\Delta \le 5.
+\]
+
+There are no capacity constraints on the arcs themselves (only on the supply
+nodes). Therefore, as long as the extra demand does not exceed the remaining $5$ units of supply
+at $S_3$, the model can reroute additional flow from $S_3$ through the network
+to $D_1$ and still satisfy all demands. Once $\Delta > 5$, the total demand
+would exceed the total available supply, making the problem infeasible.
+
+\textbf{Maximum feasible increase:}
+\[
+\Delta_{\max} = 5.
+\]
+
 
 \clearpage
 
