@@ -264,22 +264,59 @@ Since the cost reduction is not large enough to make the variable enter the basi
 There is \textbf{no expected change} in the basis or the total cost.
 
 
-
 \subsection*{f) What if the same cost of shipping from $S_0$ to $T^1_0$ decreases by 27 units instead of one?}
 
-In the previous part, the cost difference between the active path and the unused path was approximately 17 units. A decrease of 1 unit was insufficient to make the new path attractive. However, a decrease of \textbf{27} units brings the cost of $c_{0,0}$ down from 28 to \textbf{1}.
+In the previous part, the cost difference between the active path and the unused path was on the order of 17 units, so a decrease of 1 unit in $c_{0,0}$ was not enough to change the solution. Now, there is a much larger decrease:
+\[
+c_{0,0}^{\text{new}} = 28 - 27 = 1.
+\]
+In the original optimal solution, all $191$ units of supply at $S_0$ are sent through the arc $S_0 \to T^1_2$, and eventually some of this flow reaches demand node $D_3$ via $T^2_3$. A representative path from $S_0$ to $D_3$ in the original solution is:
+\[
+S_0 \;\to\; T^1_2 \;\to\; T^2_3 \;\to\; D_3.
+\]
+The per-unit cost of this path is
+\[
+\underbrace{c_{0,2}}_{S_0 \to T^1_2}
++
+\underbrace{c_{2,3}}_{T^1_2 \to T^2_3}
++
+\underbrace{c_{3,3}}_{T^2_3 \to D_3}
+=
+11 + 30 + 12 = 53.
+\]
+After the cost change, the flow can instead be sent from $S_0$ to $D_3$ along this cheaper path:
+\[
+S_0 \;\to\; T^1_0 \;\to\; T^2_1 \;\to\; D_3,
+\]
+whose per-unit cost becomes:
+\[
+\underbrace{c_{0,0}^{\text{new}}}_{S_0 \to T^1_0}
++
+\underbrace{c_{0,1}}_{T^1_0 \to T^2_1}
++
+\underbrace{c_{1,3}}_{T^2_1 \to D_3}
+=
+1 + 34 + 13 = 48.
+\]
+For each unit of flow moving from the old path to the new path, the cost decreases by:
+\[
+\text{old path cost} - \text{new path cost}
+=
+53 - 48 = 5.
+\]
 
-\textbf{Cost Comparison:}
-\begin{itemize}
-    \item Current active link ($S_0 \to T^1_2$): Unit cost = 11.
-    \item Proposed link ($S_0 \to T^1_0$): Unit cost = 28 - 27 = 1.
-\end{itemize}
-
-This decrease is significantly larger than the reduced cost barrier observed previously. It makes the path via $T^1_0$ far cheaper than the current optimal path via $T^1_2$.
+Originally, $191$ units of supply from $S_0$ are shipped along the 53-per-unit route. Rerouting all 191 units to the 48-per-unit route \textbf{decreases} the objective value.
 
 \textbf{Expected Change:}
-Because the cost reduction exceeds the reduced cost of the variable, the new reduced cost of $x_{0,0}$ becomes negative. This signals that the solution can be improved by using this link.
-Therefore, \textbf{a change in the basis is expected}. Variable $x_{0,0}$ will enter the basis (become positive), and likely replace $x_{0,2}$ as the primary route for $S_0$. The total cost will also decrease significantly.
+
+The large cost reduction makes the reduced cost of $x_{0,0}$ negative, so a change in the basis is expected.
+$x_{0,0}$ enters the basis with positive flow, replacing part of the flow that previously used $x_{0,2}$ and the old route.
+\[
+\Delta Z
+= (\text{new cost} - \text{old cost})
+= -5 \times 191
+= -955.
+\]
 
 
 \subsection*{g) What if $S_0$ is no longer allowed to ship to $T^1_2$?}
