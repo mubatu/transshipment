@@ -146,13 +146,71 @@ def run_Q3a():
     print("Base model shadow price (Supply_3): ", base_shadow_S3)
     print("Q3a model shadow price (Supply_3):  ", new_shadow_S3)
 
+def run_Q3b():
+    """
+    Output the Question 3b results.
+    """
+    # Base model
+    base_model = solve_transshipment()
+    base_obj = pulp.value(base_model.objective)
+    base_shadow_S0 = base_model.constraints["Supply_0"].pi
 
-### Command line interface ###
+    # Modified supplies: increase S_0 by 1 (index 0)
+    supply_caps_3b = supplyCapacities.copy()
+    supply_caps_3b[0] += 1
+
+    model_3b = solve_transshipment(supply_caps=supply_caps_3b)
+    new_obj = pulp.value(model_3b.objective)
+
+    print("========== Q3b: CHANGE IN SUPPLY CAPACITY AT S_0 ==========")
+    print(f"Original capacity S_0: {supplyCapacities[0]}")
+    print(f"New capacity S_0:      {supply_caps_3b[0]}\n")
+
+    print("----- Objective values -----")
+    print("Base objective value:           ", base_obj)
+    print("Objective after change (Q3b):   ", new_obj)
+    print("Change in objective (new - base):", new_obj - base_obj, "\n")
+
+    print("----- Shadow price of Supply_0 -----")
+    print("Base model shadow price (Supply_0): ", base_shadow_S0)
+
+def run_Q3c():
+    """
+    Output the Question 3c results.
+    The demand quantity of demand node D_0 increases by one unit.
+    """
+    # Base model
+    base_model = solve_transshipment()
+    base_obj = pulp.value(base_model.objective)
+    base_shadow_D0 = base_model.constraints["Demand_0"].pi
+
+    # Modified demands: increase D_0 by 1 (index 0)
+    demand_3c = demandQuantities.copy()
+    demand_3c[0] += 1
+
+    model_3c = solve_transshipment(demand_quants=demand_3c)
+    new_obj = pulp.value(model_3c.objective)
+
+    print("========== Q3c: CHANGE IN DEMAND AT D_0 ==========")
+    print(f"Original demand D_0: {demandQuantities[0]}")
+    print(f"New demand D_0:      {demand_3c[0]}\n")
+
+    print("----- Objective values -----")
+    print("Base objective value:           ", base_obj)
+    print("Objective after change (Q3c):   ", new_obj)
+    print("Change in objective (new - base):", new_obj - base_obj, "\n")
+
+    print("----- Shadow price of Demand_0 -----")
+    print("Base model shadow price (Demand_0): ", base_shadow_D0)
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage:")
         print("  python3 main.py Q2")
         print("  python3 main.py Q3a")
+        print("  python3 main.py Q3b")
+        print("  python3 main.py Q3c")
         sys.exit(1)
 
     task = sys.argv[1]
@@ -161,6 +219,10 @@ if __name__ == "__main__":
         run_Q2()
     elif task == "Q3a":
         run_Q3a()
+    elif task == "Q3b":
+        run_Q3b()
+    elif task == "Q3c":
+        run_Q3c()
     else:
         print("Unknown argument:", task)
-        print("Use 'Q2' or 'Q3a'.")
+        print("Use 'Q2', 'Q3a', 'Q3b' or 'Q3c'.")
