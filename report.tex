@@ -52,8 +52,8 @@
 \setcounter{page}{1}
 
 % ================== QUESTION 1 ==================
-\section*{Modeling}
-\addcontentsline{toc}{section}{Modeling}
+\section*{1. Modeling}
+\addcontentsline{toc}{section}{1. Modeling}
 
 \subsection*{1. Sets and Indices}
 \begin{itemize}
@@ -99,8 +99,8 @@ Minimize the total transportation cost across all layers:
 
 
 % ================== QUESTION 2 ==================
-\section*{Implementation}
-\addcontentsline{toc}{section}{Implementation}
+\section*{2. Implementation}
+\addcontentsline{toc}{section}{2. Implementation}
 
 The optimization model formulated in the modeling part was implemented using the Python \texttt{pulp} library. The resulting network flow, showing only the active paths (basic variables) and their respective flow quantities, is visualized below in Figure \ref{fig:network_sol}.
 
@@ -115,8 +115,8 @@ The optimization model formulated in the modeling part was implemented using the
 
 
 % ================== QUESTION 3 ==================
-\section*{Economic Interpretation and Sensitivity Analysis}
-\addcontentsline{toc}{section}{Economic Interpretation and Sensitivity Analysis}
+\section*{3. Economic Interpretation and Sensitivity Analysis}
+\addcontentsline{toc}{section}{3. Economic Interpretation and Sensitivity Analysis}
 
 \subsection*{a) What if the capacity of $S_3$ increases by one unit?}
 In the solution obtained in the implementation part, the flows from the supply
@@ -355,10 +355,34 @@ would exceed the total available supply, making the problem infeasible.
 \clearpage
 
 
-% ================== QUESTION 4 ==================
-\section*{Integrality}
-\addcontentsline{toc}{section}{Integrality}
 
-% Answer for Question 4.
+% ================== QUESTION 4 ==================
+\section*{4. Integrality}
+\addcontentsline{toc}{section}{4. Integrality}
+
+In the implemented model, all decision variables are defined as
+\emph{continuous} and non-negative. However, in the optimal solution, all flow values turn out to be \textbf{integers}. This is not a coincidence, but a well-known property of \emph{network flow}
+models such as transportation and transshipment problems. The main reasons
+are:
+
+\begin{itemize}
+    \item The constraints of the model are all of the form:
+    \begin{itemize}
+        \item supply constraints (sum of flows $\leq$ integer),
+        \item flow conservation constraints (sum of inflows $=$ sum of outflows),
+        \item demand constraints (sum of inflows $\geq$ integer),
+    \end{itemize}
+    and they correspond to a network structure.
+    \item The right-hand sides (supplies and demands) are all \textbf{integers}.
+    \item The constraint matrix of a pure network flow problem is
+    \textbf{totally unimodular}. This implies that every basic feasible solution
+    of the linear program is integer whenever the right-hand sides are integer.
+\end{itemize}
+
+Because of total unimodularity and integer supplies/demands, the extreme points of the feasible region automatically have integer
+components. The simplex method returns one of these extreme points as the
+optimal solution. Therefore, even though we allow the decision variables to
+take any continuous values, the structure of the problem forces the
+optimal solution to be integral.
 
 \end{document}
