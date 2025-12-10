@@ -33,8 +33,8 @@
 
     \begin{large}
     \begin{tabular}{rl}
-        Student ID: & 2021400231 \\
-        Student Name: & Mustafa Batuhan Büber \\
+        ID: & 2021400231 \\
+        Name: & Mustafa Batuhan Büber \\
     \end{tabular}
     \end{large}
 
@@ -52,8 +52,8 @@
 \setcounter{page}{1}
 
 % ================== QUESTION 1 ==================
-\section*{Question 1: Modeling}
-\addcontentsline{toc}{section}{Question 1: Modeling}
+\section*{Modeling}
+\addcontentsline{toc}{section}{Modeling}
 
 \subsection*{1. Sets and Indices}
 \begin{itemize}
@@ -99,17 +99,24 @@ Minimize the total transportation cost across all layers:
 
 
 % ================== QUESTION 2 ==================
-\section*{Question 2: Implementation}
-\addcontentsline{toc}{section}{Question 2: Implementation}
+\section*{Implementation}
+\addcontentsline{toc}{section}{Implementation}
 
-% Answer for Question 2.
+The optimization model formulated in the modeling part was implemented using the Python \texttt{pulp} library. The resulting network flow, showing only the active paths (basic variables) and their respective flow quantities, is visualized below in Figure \ref{fig:network_sol}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{networkd.png}
+    \caption{Visual representation of the network.}
+    \label{fig:network_sol}
+\end{figure}
 
 \clearpage
 
 
 % ================== QUESTION 3 ==================
-\section*{Question 3: Economic Interpretation and Sensitivity Analysis}
-\addcontentsline{toc}{section}{Question 3: Economic Interpretation and Sensitivity Analysis}
+\section*{Economic Interpretation and Sensitivity Analysis}
+\addcontentsline{toc}{section}{Economic Interpretation and Sensitivity Analysis}
 
 
 \subsection*{3(a)}
@@ -164,8 +171,8 @@ What is the maximum amount by which this demand can increase while the system ca
 
 
 % ================== QUESTION 4 ==================
-\section*{Question 4: Integrality}
-\addcontentsline{toc}{section}{Question 4: Integrality}
+\section*{Integrality}
+\addcontentsline{toc}{section}{Integrality}
 
 % Answer for Question 4.
 
